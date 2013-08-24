@@ -2,60 +2,13 @@
 Crafty.init(668, 300, 'crafty');
 Crafty.background('rgb(127,127,127)');
 
-// The Player COMPONENT
-Crafty.c("Player", {
-  init: function() {
-    this.requires('2D, Canvas, Color, Collision, Multiway')
-      .multiway(4, {
-           UP_ARROW: -90,
-           DOWN_ARROW: 90,
-           LEFT_ARROW: 180,
-           RIGHT_ARROW: 0
-       })
-      .color('rgb(20, 75, 40)')
-      .attr({x: 50, y: 50, w: 25, h: 50})
-      .onDoorHit()
-      .stopOnSolids();
-  },
+var A = {
+  tick: 0
+};
 
-  onDoorHit: function () {
-    this.onHit('Door', function () {
-      console.log('scene 2');
-      Crafty.scene("Scene2");
-    });
-    return this;
-  },
-
-  // Registers a stop-movement function to be called when
-  // this entity hits an entity with the "Solid" component
-  stopOnSolids: function () {
-    this.onHit('Solid', this.stopMovement);
-    return this;
-  },
- 
-  // Stops the movement
-  stopMovement: function () {
-    this._speed = 0;
-    if (this._movement) {
-      this.x -= this._movement.x;
-      this.y -= this._movement.y;
-    }
-  }
-});
-
-// The Player ENTITY
-Crafty.e("Player");
-
-// The Wall ENTITY
-Crafty.e("2D, Canvas, Color, Collision, Solid, Wall")
-   .attr({x: 10, y: 50, w: 5, h: 150})
-   .color("rgb(0,124,124)");
-
-// The Door ENTITY
-Crafty.e("2D, Canvas, Color, Collision, Solid, Door")
-   .attr({x: 150, y: 50, w: 50, h: 60})
-   .color("rgb(24,24,24)");
-
+window.onload = function () {
+  Crafty.scene('sceneBridge');
+};
 
 // //Paddles
 // Crafty.e("Paddle, 2D, DOM, Color, Multiway")
