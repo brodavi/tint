@@ -1,14 +1,24 @@
-// The "Piece" COMPONENT
-Crafty.c("Piece", {
+// The 'Piece' COMPONENT
+Crafty.c('Piece', {
   init: function () {
-    this.requires("2D, Canvas, Color, Tween, Gravity")
-    .color("rgb(34, 64, 27)")
+    this.requires('2D, Canvas, Color, Tween, Gravity')
+    .color('rgb(34, 64, 27)')
     .attr({w: 10, h: 10});
   }
 });
 
+// The 'Floor' COMPONENT
+Crafty.c('Floor', {
+  init: function () {
+    this.requires('2D, Canvas, Color')
+    .color('rgb(255, 0, 0)')
+    .attr({w: 200, h: 2});
+  }
+});
+
+
 // The ExplodingPanel COMPONENT
-Crafty.c("ExplodingPanel", {
+Crafty.c('ExplodingPanel', {
   init: function() {
     this.requires('2D, Canvas, Color, Collision')
       .color('rgb(100, 200, 32)')
@@ -17,40 +27,31 @@ Crafty.c("ExplodingPanel", {
       .explodeOnTouch();
   },
 
-  addPieces: function () {
+  init2: function () {
     this.pieces = [];
-    this.pieces[0] = null;
-    this.pieces[1] = null;
-    this.pieces[2] = null;
 
-    console.log('pieces before adding: ', this.pieces);
-
-    for (var i in this.pieces) {
-      this.pieces[i] = Crafty.e("Piece").attr({ x: this.x+20, y: this.y+20});
-
-      console.log('this.pieces[0]: ', this.pieces[0]);
+    for (var i = 0; i < 20; i++) {
+      this.pieces[i] = Crafty.e('Piece').attr({ x: this.x+20, y: this.y+20});
     }
 
-    console.log('pieces after adding: ', this.pieces);
-    console.log('pieces[0] after adding: ', this.pieces[0]);
+    Crafty.e('Floor')
+      .attr({ x: this.x - 100, y: this.y + this.h });
 
     return this;
   },
 
   explodeOnTouch: function () {
-
-    console.log('this: ', this);
-
     this.onHit('Player', this.explode);
 
     return this;
   },
 
   explodeOnTick: function () {
-    if (A.tick === this.explodeOnTick) {
-      console.log('A.tick: ' + A.tick + 'this.explodeOnTick: ' + this.explodeOnTick);
-      this.explode();
-    }
+    this.bind('EnterFrame', function () {
+      if (A.tick === this.explodeOnTick) {
+        this.explode();
+      }
+    });
 
     return this;
   },
@@ -58,10 +59,22 @@ Crafty.c("ExplodingPanel", {
   explode: function () {
 
     for (var i in this.pieces) {
-      this.pieces[i].tween({
-        x: this.x + 50 - Math.random()*100,
-        y: this.y + 50 - Math.random()*100
-      }, 100);
+
+      this.pieces[i].x = this.pieces[i].x + 30 - Math.random() * 60;
+      this.pieces[i].y = this.pieces[i].y + 30 - Math.random() * 60;
+
+
+      // this.pieces[i].dx = this.x + 1 - Math.random();
+      // this.pieces[i].dy = this.y + 1 - Math.random();
+
+      // // set up velocity (should be a component?)
+      // this.pieces[i].bind('EnterFrame', function () {
+      //   console.log('this.dx: ' + this.dx);
+      //   this.x = this.x + this.dx;
+      //   this.y = this.y + this.dy;
+      // });
+
+      this.pieces[i].gravity('Floor');
     }
 
     return this;

@@ -1,12 +1,8 @@
-Crafty.scene("sceneBridge", function () {
-  Crafty.background("#FFF");
+Crafty.scene("sceneLift", function () {
+  Crafty.background("#EEE");
 
   Crafty.e("Player")
-    .attr({x: 20, y: 20});
-
-  Crafty.e("ExplodingPanel")
-    .attr({x: 50, y: 100, explodeOnTick: 10})
-    .init2();
+    .attr({x: 100, y: 100});
 
   Crafty.e("2D, Canvas, Color, Collision, Solid, Wall")
     .attr({x: 10, y: 50, w: 5, h: 150})

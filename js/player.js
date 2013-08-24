@@ -16,8 +16,7 @@ Crafty.c("Player", {
 
   onDoorHit: function () {
     this.onHit('Door', function () {
-      console.log('scene 2');
-      Crafty.scene("Scene2");
+      Crafty.scene("sceneLift");
     });
     return this;
   },
