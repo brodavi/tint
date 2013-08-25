@@ -1,3 +1,57 @@
+Crafty.c('Head', {
+  init: function () {
+    this.requires('2D, Canvas, Color')
+    .color('rgb(47,27,81)')
+    .attr(
+      {
+        x: this.x - 10,
+        y: this.y -110,
+        w: 22,
+        h: 25
+      }
+    )
+  }
+});
+
+Crafty.c('Arm', {
+  init: function () {
+    this.requires('2D, Canvas, Color, Rotate, Editable')
+      .color('rgb(130, 40, 40)')
+      .attr(
+        {
+          originX: this.x,
+          originY: this.y,
+          x: this.x - 10,
+          y: this.y - 65,
+          w: 15,
+          h: 40,
+          rotation: 0,
+          orient: -1 // left
+        }
+      )
+      .origin(this.originX, this.originY)
+      .attach(Crafty.e('2D, Canvas, Color')
+             .color('rgb(0,0,255)')
+             .attr({ x: this.originX,
+                     y: this.originY,
+                     w: 2,
+                     h: 2}))
+      .bind('WalkingLeft', this.handleWalkingLeft)
+      .bind('WalkingRight', this.handleWalkingRight);
+    return this;
+  },
+  set: function (orient) {
+    this.orient = orient;
+    return this;
+  },
+  handleWalkingLeft: function (dir) {
+    this.rotation = Math.cos(A.gameTick * 0.3) * this.orient * 45 - 15;
+  },
+  handleWalkingRight: function (dir) {
+    this.rotation = Math.cos(A.gameTick * 0.3) * this.orient * 45 + 15;
+  }
+});
+
 Crafty.c('Leg', {
   init: function () {
     this.requires('2D, Canvas, Color, Rotate, Editable')
@@ -56,7 +110,7 @@ Crafty.c('PlayerBody', {
 Crafty.c('Player', {
   init: function() {
     this.requires('2D, Canvas, Color, Collision, Multiway')
-      .multiway(3, {
+      .multiway(5, {
            UP_ARROW: -90,
            DOWN_ARROW: 90,
            LEFT_ARROW: 180,
@@ -68,10 +122,9 @@ Crafty.c('Player', {
     this.attach(Crafty.e('PlayerBody'));
     this.attach(Crafty.e('Leg').set(1).attr({z: this.z - 1}));
     this.attach(Crafty.e('Leg').set(-1));
-
-    this.onHit('Door', function () {
-      Crafty.scene('sceneLift');
-    });
+    this.attach(Crafty.e('Head'));
+    this.attach(Crafty.e('Arm').set(-1).attr({z: this.z - 1}));
+    this.attach(Crafty.e('Arm').set(1));
 
     this.onHit('Solid', this.stopMovement);
 

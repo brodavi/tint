@@ -56,10 +56,15 @@ Crafty.scene('sceneBridge', function () {
       ]
     );
 
-  // THE TURBOLIFT
-  Crafty.e('2D, Canvas, Color, Collision, Solid, Editable, Door')
+  // The Door
+  Crafty.e('Door')
+    .setOrigin(284, 450);
+
+  // The Portal
+  Crafty.e('Portal')
     .attr({x: 284, y: 490, w: 100, h: 20})
-    .color('rgb(24,24,24)');
+    .color('rgb(24,24,24)')
+    .setDestination('sceneLift');
 
   // Player has highest Z
   Crafty.e('Player')

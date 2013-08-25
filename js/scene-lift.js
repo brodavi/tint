@@ -1,5 +1,9 @@
 Crafty.scene("sceneLift", function () {
-  Crafty.background("#EEE");
+
+  // Transition
+  Crafty.e('Transition');
+
+  Crafty.background("rgb(127,127,127)");
 
   Crafty.e("Player")
     .attr({x: 100, y: 100});
