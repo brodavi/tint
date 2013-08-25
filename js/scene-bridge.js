@@ -38,13 +38,8 @@ Crafty.scene('sceneBridge', function () {
   /**
    * Action Points
    */
-
-  Crafty.e('ActionPoint, Editable')
-    .setOrigin(
-      {
-        x: 12,
-        y: 302,
-        actions:
+  Crafty.e('ActionPoint')
+    .attr({x: 12, y: 302, actions:
         [
           {
             actionText: 'Scan Anomaly',
@@ -57,19 +52,25 @@ Crafty.scene('sceneBridge', function () {
           {
             actionText: 'Eject Warp Core',
             response: 'Warp core ejection system offline'
+          },
+          {
+            actionText: 'Show Map',
+            response: '',
+            obj: 'Map'
           }
         ]
-      });
+      })
+    .animate();
 
   // The Door
-  Crafty.e('Door')
+  Crafty.e('DoorUpDown')
     .setOrigin(256, 402);
 
   // The Portal
   Crafty.e('Portal')
     .attr({x: 284, y: 490, w: 100, h: 20})
     .color('rgb(24,24,24)')
-    .setDestination('sceneLift');
+    .setDestination('sceneCargoBay');
 
   // Player has highest Z
   Crafty.e('Player')

@@ -1,4 +1,4 @@
-Crafty.scene("sceneLift", function () {
+Crafty.scene("sceneTransporterRoom", function () {
 
   // Transition
   Crafty.e('Transition');

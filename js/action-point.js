@@ -1,39 +1,3 @@
-Crafty.c('ActionItem', {
-  init: function () {
-    this.requires('2D, Canvas, Color, Keyboard, Text')
-      .attr(
-        {
-          actionText: null,
-          response: null,
-          w: 250,
-          h: 15
-        }
-      )
-      .color('rgb(123,123,123)');
-
-    this.bind('KeyDown', this.handleKeyDown);
-    this.bind('SelectionMade', this.destroy);
-  },
-  activate: function () {
-    this.selected = true;
-    this.color('rgb(255,255,255)');
-  },
-  deactivate: function () {
-    this.selected = false;
-    this.color('rgb(123,123,123)');
-  },
-  handleKeyDown: function () {
-    if (this.isDown('SPACE') &&
-        this.selected) {
-      Crafty.trigger('SelectionMade');
-
-      console.log('response: ' + this.response);
-      Crafty.e('ResponseNotification')
-        .text(this.response);
-    }
-  }
-});
-
 Crafty.c('ResponseNotification', {
   init: function () {
     this.requires('2D, Canvas, Color, Keyboard')
@@ -70,6 +34,57 @@ Crafty.c('ResponseNotification', {
           .bind('Dismiss', this.destroy);
 
     this.w = text.length * 12 + 20;
+  }
+});
+
+Crafty.c('ActionItem', {
+  init: function () {
+    this.requires('2D, Canvas, Color, Keyboard, Text')
+      .attr(
+        {
+          actionText: null,
+          response: null,
+          w: 250,
+          h: 15
+        }
+      )
+      .color('rgb(123,123,123)');
+
+    this.bind('KeyDown', this.handleKeyDown);
+    this.bind('SelectionMade', this.destroy);
+  },
+  activate: function () {
+    this.selected = true;
+    this.color('rgb(255,255,255)');
+  },
+  deactivate: function () {
+    this.selected = false;
+    this.color('rgb(123,123,123)');
+  },
+  handleKeyDown: function () {
+    if (this.isDown('SPACE') &&
+        this.selected) {
+      Crafty.trigger('SelectionMade');
+
+
+      /**
+       * DO THE ACTION
+       */
+      if (this.result) {
+        this.result();
+      }
+      if (!this.obj) {
+        Crafty.e('ResponseNotification')
+          .text(this.response);
+        if (this.response2) {
+          Crafty.e('ResponseNotification')
+            .attr({y: 240})
+            .text(this.response2);
+        }
+      } else {
+        Crafty.e(this.obj);
+      }
+    }
   }
 });
 
@@ -125,7 +140,10 @@ Crafty.c('ActionPanel', {
               x: this.x + 20,
               y: this.y + 20 + i * 20,
               actionText: actions[i].actionText,
-              response: actions[i].response
+              response: actions[i].response,
+              response2: actions[i].response2,
+              obj: actions[i].obj,
+              result: actions[i].result
             }
           );
 
@@ -140,28 +158,49 @@ Crafty.c('ActionPanel', {
   }
 });
 
-Crafty.c('ActionPoint', {
+Crafty.c('FlashingPoint', {
   init: function () {
-    this.requires('2D, Canvas, Color, Collision')
-      .bind('ActionPoint', this.showActions)
-      //.bind('TweenEnd', this.animate)
+    this.requires('2D, Canvas, Color, Tween')
+      .attr({w: 20, h: 20, big: false })
+      .bind('TweenEnd', this.animate)
       .color('rgb(34,63,172)');
 
     return this;
   },
-  setOrigin: function (x, y) {
-    this.attr({x: x, y: y, w: 10, h: 10, origX: x, origY: y, origW: 10, origH: 10, bigX: x - 10, bigY: y - 10, bigW: 30, bigH: 30});
-    //this.animate();
-  },
   animate: function () {
+    if (!this.origX) {
+      this.init2();
+    }
+
+    this.big = Math.abs(this.x - this.bigX) < 2;
+
     if (this.big) {
       this.tween({x: this.origX, y: this.origY, w: this.origW, h: this.origH}, 32);
     } else {
       this.tween({x: this.bigX, y: this.bigY, w: this.bigW, h: this.bigH}, 32);
     }
   },
+  init2: function () {
+    console.log('setting origin');
+    this.attr({origX: this.x, origY: this.y, origW: this.w, origH: this.h, bigX: this.x - 10, bigY: this.y - 10, bigW: this.w + 30, bigH: this.h + 30});
+  }
+
+});
+
+Crafty.c('ActionPoint', {
+  init: function () {
+    this.requires('2D, Collision')
+      .attr({w: 40, h: 40})
+      .bind('ActionPoint', this.showActions);
+
+    return this;
+  },
+  animate: function () {
+    Crafty.e('FlashingPoint')
+      .attr({x: this.x, y: this.y})
+      .animate();
+  },
   showActions: function () {
-    Crafty.trigger('BigShake');
     Crafty.e('ActionPanel').setActions(this.actions);
   }
 });
