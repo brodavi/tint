@@ -12,4 +12,7 @@ Crafty.scene("sceneLift", function () {
     .attr({x: 150, y: 50, w: 50, h: 60})
     .color("rgb(24,24,24)");
 
+  // Gotta have the countdown on each scene?
+  Crafty.e('Countdown');
+
 });

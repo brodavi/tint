@@ -1,9 +1,11 @@
 // Init Crafty:
-Crafty.init(668, 300, 'crafty');
+Crafty.init(668, 500, 'crafty');
 Crafty.background('rgb(127,127,127)');
 
 var A = {
-  tick: 0
+  constTick: 0,
+  gameTick: 0,
+  count: 10
 };
 
 window.onload = function () {
@@ -15,11 +17,44 @@ window.onload = function () {
   };
 
   Crafty.e('TickManager')
-    .bind('EnterFrame', function () {
-      if (true) {
-        A.tick = A.tick + 1;
+    .attr(
+      {
+        slowMo: false,
+        slowMod: 5,
+        paused: false
       }
+    )
+    .bind('Pause', function () {
+      this.paused = true;
+    })
+    .bind('ActionPoint', function () {
+      this.slowMo = true;
+    })
+    .bind('Dismiss', function () {
+      this.slowMo = false;
+    })
+    .bind('EnterFrame', function () {
+
+      A.constTick = A.constTick + 1;
+      if (this.paused) {
+        return;
+      }
+
+      if (this.slowMo) {
+        if (A.constTick % this.slowMod === 0) {
+          A.gameTick = A.gameTick + 1;
+          Crafty.trigger('GameTick');
+        }
+      } else {
+        if (A.constTick % 2 === 0) {
+          A.gameTick = A.gameTick + 1;
+          Crafty.trigger('GameTick');
+        }
+      }
+
     });
+
+  Crafty.e('CameraShake');
 
   Crafty.scene('sceneBridge');
 };
