@@ -143,11 +143,22 @@ Crafty.c('ActionPanel', {
 Crafty.c('ActionPoint', {
   init: function () {
     this.requires('2D, Canvas, Color, Collision')
-      .bind('ActionPoint', this.showActions);
+      .bind('ActionPoint', this.showActions)
+      //.bind('TweenEnd', this.animate)
+      .color('rgb(34,63,172)');
+
     return this;
   },
-  actions: function (actions) {
-    this.actions = actions;
+  setOrigin: function (x, y) {
+    this.attr({x: x, y: y, w: 10, h: 10, origX: x, origY: y, origW: 10, origH: 10, bigX: x - 10, bigY: y - 10, bigW: 30, bigH: 30});
+    //this.animate();
+  },
+  animate: function () {
+    if (this.big) {
+      this.tween({x: this.origX, y: this.origY, w: this.origW, h: this.origH}, 32);
+    } else {
+      this.tween({x: this.bigX, y: this.bigY, w: this.bigW, h: this.bigH}, 32);
+    }
   },
   showActions: function () {
     Crafty.trigger('BigShake');

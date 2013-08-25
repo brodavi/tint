@@ -33,7 +33,7 @@ Crafty.c('Countdown', {
       this.textObj.text('' + A.count);
       this.trigger('Change');
       if (A.count === 0) {
-        console.log('Ship Destroyed!');
+        Crafty.trigger('BigShake');
         Crafty.trigger('ShipDestroyed');
         Crafty.scene('sceneBridge');
         A.count = 10;

@@ -15,7 +15,7 @@ Crafty.c('Head', {
 
 Crafty.c('Arm', {
   init: function () {
-    this.requires('2D, Canvas, Color, Rotate, Editable')
+    this.requires('2D, Canvas, Color, Rotate')
       .color('rgb(130, 40, 40)')
       .attr(
         {
@@ -54,7 +54,7 @@ Crafty.c('Arm', {
 
 Crafty.c('Leg', {
   init: function () {
-    this.requires('2D, Canvas, Color, Rotate, Editable')
+    this.requires('2D, Canvas, Color, Rotate')
       .color('rgb(100, 30, 30)')
       .attr(
         {
@@ -93,7 +93,7 @@ Crafty.c('Leg', {
 
 Crafty.c('PlayerBody', {
   init: function () {
-    this.requires('2D, Canvas, Color, Editable')
+    this.requires('2D, Canvas, Color')
       .color('rgb(20, 75, 40)')
       .attr(
         {

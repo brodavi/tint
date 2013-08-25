@@ -1,4 +1,4 @@
-Crafty.scene('sceneBridge', function () {
+Crafty.scene('sceneSickBay', function () {
   Crafty.background('rgb(127,127,127)');
 
   // Crafty.e('ExplodingPanel')
@@ -11,34 +11,28 @@ Crafty.scene('sceneBridge', function () {
    * Walls
    */
   // top
-  Crafty.e('2D, Canvas, Color, Collision, Solid, Editable, Wall')
-    .attr({x: 10, y: 200, w: 650, h: 50})
-    .color('rgb(0,124,124)');
+  Crafty.e('Wall')
+    .attr({x: 10, y: 200, w: 650, h: 50});
 
   // left
-  Crafty.e('2D, Canvas, Color, Collision, Solid, Editable, Wall')
-    .attr({x: 4, y: 230, w: 7, h: 256})
-    .color('rgb(0,124,124)');
+  Crafty.e('Wall')
+    .attr({x: 4, y: 230, w: 7, h: 256});
 
   // right
-  Crafty.e('2D, Canvas, Color, Collision, Solid, Editable, Wall')
-    .attr({x: 658, y: 230, w: 7, h: 256})
-    .color('rgb(0,124,124)');
+  Crafty.e('Wall')
+    .attr({x: 658, y: 230, w: 7, h: 256});
 
   // bottom left
-  Crafty.e('2D, Canvas, Color, Collision, Solid, Editable, Wall')
-    .attr({x: 9, y: 482, w: 272, h: 7})
-    .color('rgb(0,124,124)');
+  Crafty.e('Wall')
+    .attr({x: 9, y: 482, w: 272, h: 7});
 
   // bottom right
-  Crafty.e('2D, Canvas, Color, Collision, Solid, Editable, Wall')
-    .attr({x: 386, y: 482, w: 272, h: 7})
-    .color('rgb(0,124,124)');
+  Crafty.e('Wall')
+    .attr({x: 386, y: 482, w: 272, h: 7});
 
   /**
    * Action Points
    */
-
   Crafty.e('ActionPoint, Editable')
     .setOrigin(
       {

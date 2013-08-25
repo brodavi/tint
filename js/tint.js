@@ -16,7 +16,7 @@ window.onload = function () {
       && event.keyCode != 32;
   };
 
-  Crafty.e('TickManager')
+  Crafty.e('TickManager, Keyboard')
     .attr(
       {
         slowMo: false,
@@ -24,8 +24,22 @@ window.onload = function () {
         paused: false
       }
     )
-    .bind('Pause', function () {
-      this.paused = true;
+    .bind('KeyDown', function () {
+      if (this.isDown('P')) {
+        this.paused = true;
+        Crafty.e('2D, Canvas, Color, Text')
+          .color('rgb(200,200,200)')
+          .attr({x: 50, y: 100, w: 503, h: 40})
+          .textFont({family: 'mono', size: '30px'})
+          .text('PAUSED. Press "U" to unpause')
+          .bind('Unpause', this.destroy);
+      }
+    })
+    .bind('KeyDown', function () {
+      if (this.isDown('U')) {
+        this.paused = false;
+        Crafty.trigger('Unpause');
+      }
     })
     .bind('ActionPoint', function () {
       this.slowMo = true;

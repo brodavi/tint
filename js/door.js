@@ -1,8 +1,8 @@
 Crafty.c('Door', {
   init: function () {
-    this.requires('2D, Canvas, Color, Collision');
-    this.attr({w: 50, h: 50});
-    this.color('rgb(72,58,32)');
+    this.requires('2D, Canvas, Collision, Editable');
+    this.attr({w: 150, h: 150});
+    //this.color('rgba(72,58,32,100)');
     this.onHit('Player', this.open);
   },
   setOrigin: function (x, y) {
@@ -15,14 +15,14 @@ Crafty.c('Door', {
 
     this.left = Crafty.e('2D, Canvas, Color, Collision, Tween, Solid')
       .color('rgb(17,185,25)')
-      .attr({x: this.x - DOORWIDTH, y: this.y, w: DOORWIDTH, h: DOORHEIGHT});
+      .attr({x: this.x - this.w/2 + DOORWIDTH/2, y: this.y + this.h/2 - DOORHEIGHT/2, w: DOORWIDTH, h: DOORHEIGHT});
 
     this.right = Crafty.e('2D, Canvas, Color, Collision, Tween, Solid')
       .color('rgb(17,85,125)')
-      .attr({x: this.x, y: this.y, w: DOORWIDTH, h: DOORHEIGHT});
+      .attr({x: this.x + this.w/2, y: this.y + this.h/2 - DOORHEIGHT/2, w: DOORWIDTH, h: DOORHEIGHT});
   },
   open: function () {
     this.left.tween({w: 0}, 10);
-    this.right.tween({w: 0, x: this.left.x + this.left.w}, 10);
+    this.right.tween({w: 0, x: this.right.x + this.right.w}, 10);
   }
 });
