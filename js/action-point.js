@@ -181,7 +181,6 @@ Crafty.c('FlashingPoint', {
     }
   },
   init2: function () {
-    console.log('setting origin');
     this.attr({origX: this.x, origY: this.y, origW: this.w, origH: this.h, bigX: this.x - 10, bigY: this.y - 10, bigW: this.w + 30, bigH: this.h + 30});
   }
 

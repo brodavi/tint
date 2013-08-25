@@ -3,20 +3,40 @@ Crafty.scene('sceneCargoBay', function () {
 
   Crafty.e('Transition');
 
+  Crafty.e('ResponseNotification')
+    .text('Cargo Bay');
+
   /**
    * Walls
    */
   // top
   Crafty.e('Wall')
-    .attr({x: 10, y: 200, w: 650, h: 50});
+    .attr({x: 10, y: 20, w: 650, h: 50})
+    .color('rgb(46,46,46)');
 
-  // left
+  // left top
   Crafty.e('Wall')
-    .attr({x: 4, y: 230, w: 7, h: 256});
+    .attr({x: 4, y: 20, w: 7, h: 180})
+    .color('rgb(46,46,46)');
+
+  // left bottom
+  Crafty.e('Wall')
+    .attr({x: 4, y: 300, w: 7, h: 190})
+    .color('rgb(46,46,46)');
+
+  // left top
+  Crafty.e('Wall')
+    .attr({x: 4, y: 20, w: 7, h: 180})
+    .color('rgb(46,46,46)');
+
+  // left bottom
+  Crafty.e('Wall')
+    .attr({x: 4, y: 300, w: 7, h: 190})
+    .color('rgb(46,46,46)');
 
   // right
   Crafty.e('Wall')
-    .attr({x: 658, y: 230, w: 7, h: 256});
+    .attr({x: 658, y: 20, w: 7, h: 466});
 
   // bottom left
   Crafty.e('Wall')
@@ -30,14 +50,13 @@ Crafty.scene('sceneCargoBay', function () {
    * Action Points
    */
   Crafty.e('ActionPoint, Editable')
-    .attr({x: 12, y: 302, actions:
+    .attr({x: 542, y: 242, actions:
            [
              {
-               actionText: 'Examine Manifest',
-               response: 'There\'s a HyperDrive Regulator on board!',
+               actionText: 'Examine Equipment',
+               response: 'This is the HyperDrive Regulator!',
                response2: 'Transport it to the engine room!',
                result: function() {
-                 console.log('A: ' + A);
                  A.foundManifest = true;
                }
              }
@@ -45,19 +64,22 @@ Crafty.scene('sceneCargoBay', function () {
           })
     .animate();
 
+  // The Door Portals
+  Crafty.e('Portal, Editable')
+    .attr({x: -2, y: 200, w: 10, h: 100})
+    .color('rgb(24,24,24)')
+    .setDestination('sceneCrewQuarters');
+
+  Crafty.e('Portal, Editable')
+    .attr({x: 284, y: 490, w: 100, h: 20})
+    .color('rgb(24,24,24)')
+    .setDestination('sceneEngineRoom');
+
   // The Doors
   Crafty.e('DoorUpDown')
-    .setOrigin(256, 42);
+    .setOrigin(256, 420);
   Crafty.e('DoorLeftRight')
-    .setOrigin(-75, 172);
-  Crafty.e('DoorLeftRight')
-    .setOrigin(586, 172);
-
-  // The Portal
-  Crafty.e('Portal')
-    .attr({x: 284, y: 90, w: 100, h: 20})
-    .color('rgb(24,24,24)')
-    .setDestination('sceneBridge');
+    .setOrigin(-69, 172);
 
   // Player has highest Z
   Crafty.e('Player')

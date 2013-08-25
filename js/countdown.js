@@ -12,7 +12,8 @@ Crafty.c('Countdown', {
           textObj: null
         }
       )
-      .bind('GameTick', this.handleGameTick);
+      .bind('GameTick', this.handleGameTick)
+      .bind('ResetTime', this.resetTime);
 
     this.textObj = Crafty.e('2D, Canvas, Color, Text')
       .color('rgb(23,23,23)')
@@ -23,9 +24,20 @@ Crafty.c('Countdown', {
           size: '30px'
         }
       )
-      .text('10');
+      .text(A.count);
 
     this.attach(this.textObj);
+  },
+  resetTime: function () {
+    Crafty.trigger('BigShake');
+    Crafty.scene('sceneBridge');
+    A.count = 10;
+    this.trigger('Change'); // hax for text
+
+    // Reset "player reality"
+    A.protected = false;
+    A.portalActive = false;
+    // But A.foundManifest must stay true if true throughout lives
   },
   handleGameTick: function () {
     if (A.gameTick % 65 === 0) {
@@ -33,10 +45,7 @@ Crafty.c('Countdown', {
       this.textObj.text('' + A.count);
       this.trigger('Change');
       if (A.count === 0) {
-        Crafty.trigger('BigShake');
-        Crafty.trigger('ShipDestroyed');
-        Crafty.scene('sceneBridge');
-        A.count = 10;
+        this.resetTime();
       }
     }
   }

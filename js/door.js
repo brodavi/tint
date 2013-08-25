@@ -30,9 +30,8 @@ Crafty.c('DoorUpDown', {
 
 Crafty.c('DoorLeftRight', {
   init: function () {
-    this.requires('2D, Canvas, Color, Collision, Editable');
+    this.requires('2D, Canvas, Collision, Editable');
     this.attr({w: 150, h: 150});
-    this.color('rgba(72,58,32,100)');
     this.onHit('Player', this.open);
   },
   setOrigin: function (x, y) {

@@ -70,7 +70,7 @@ window.onload = function () {
 
   Crafty.e('CameraShake');
 
-  Crafty.scene('sceneBridge');
+  Crafty.scene('sceneEngineRoom');
 };
 
 // //Paddles

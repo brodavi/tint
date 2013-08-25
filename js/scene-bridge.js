@@ -7,33 +7,36 @@ Crafty.scene('sceneBridge', function () {
 
   Crafty.e('Transition');
 
+  Crafty.e('ResponseNotification')
+    .text('Bridge');
+
   /**
    * Walls
    */
   // top
-  Crafty.e('2D, Canvas, Color, Collision, Solid, Editable, Wall')
+  Crafty.e('Wall')
     .attr({x: 10, y: 200, w: 650, h: 50})
-    .color('rgb(0,124,124)');
+    .color('rgb(46,46,46)');
 
   // left
-  Crafty.e('2D, Canvas, Color, Collision, Solid, Editable, Wall')
+  Crafty.e('Wall')
     .attr({x: 4, y: 230, w: 7, h: 256})
-    .color('rgb(0,124,124)');
+    .color('rgb(46,46,46)');
 
   // right
-  Crafty.e('2D, Canvas, Color, Collision, Solid, Editable, Wall')
+  Crafty.e('Wall')
     .attr({x: 658, y: 230, w: 7, h: 256})
-    .color('rgb(0,124,124)');
+    .color('rgb(46,46,46)');
 
   // bottom left
-  Crafty.e('2D, Canvas, Color, Collision, Solid, Editable, Wall')
+  Crafty.e('Wall')
     .attr({x: 9, y: 482, w: 272, h: 7})
-    .color('rgb(0,124,124)');
+    .color('rgb(46,46,46)');
 
   // bottom right
-  Crafty.e('2D, Canvas, Color, Collision, Solid, Editable, Wall')
+  Crafty.e('Wall')
     .attr({x: 386, y: 482, w: 272, h: 7})
-    .color('rgb(0,124,124)');
+    .color('rgb(46,46,46)');
 
   /**
    * Action Points
@@ -70,11 +73,10 @@ Crafty.scene('sceneBridge', function () {
   Crafty.e('Portal')
     .attr({x: 284, y: 490, w: 100, h: 20})
     .color('rgb(24,24,24)')
-    .setDestination('sceneCargoBay');
+    .setDestination('sceneHallway');
 
-  // Player has highest Z
   Crafty.e('Player')
-    .attr({x: 220, y: 320});
+    .attr({x: 220, y: 320, z: 1000});
 
   // Gotta have the countdown on each scene?
   Crafty.e('Countdown');
