@@ -138,7 +138,7 @@ Crafty.scene('sceneSickBay', function () {
     portal.y = 420;
   });
 
-  if (!A.portalActive) {
+  if (A.portalActive) {
     portal.y = 420;
   }
 

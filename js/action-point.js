@@ -78,7 +78,7 @@ Crafty.c('ActionItem', {
       if (this.result) {
         this.result();
       }
-      if (!this.obj) {
+      if (!this.obj) { // map and transporter tool
         if (this.response) {
           Crafty.e('ResponseNotification')
           .text(this.response);

@@ -48,10 +48,7 @@ Crafty.scene('sceneEngineRoom', function () {
     },
     {
       actionText: 'Attempt to fix Engine',
-      response: 'You need a HyperDrive Regulator!',
-      result: function () {
-        Crafty.trigger('ResetTime');
-      }
+      response: 'You need a HyperDrive Regulator!'
     }
   ];
 
