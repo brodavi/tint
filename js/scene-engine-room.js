@@ -3,8 +3,9 @@ Crafty.scene('sceneEngineRoom', function () {
 
   Crafty.e('Transition');
 
-  Crafty.e('ResponseNotification')
-    .text('Engine Room');
+  Crafty.e('Title')
+    .setText('Engine Room')
+    .attr({x: 50});
 
   /**
    * Walls

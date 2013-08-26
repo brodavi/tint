@@ -13,6 +13,61 @@ Crafty.scene('sceneBridge', function () {
   /**
    * Walls
    */
+  // viewScreen
+  Crafty.e('2D, Canvas, Color')
+    .attr({x: 10, y: 20, w: 650, h: 150})
+    .color('rgb(46,46,46)');
+  Crafty.e('2D, Canvas, Color')
+    .attr({x: 20, y: 30, w: 630, h: 130})
+    .color('rgb(0,0,0)');
+
+  for (var i = 0; i < 100; i++) {
+    Crafty.e('2D, Canvas,Color')
+      .color('rgba(255,255,255,' + Math.random() + ')')
+      .attr({x:Math.random()*630 + 20, y:Math.random()*130 + 30, w:2, h:2});
+  }
+
+  // Crafty.e('2D, Canvas, StarGenerator')
+  //   .attr({ x: 315, y: 50,
+  //           getGoing: function () {
+  //             this.randMod = Crafty.math.randomInt(0, 20);
+  //             this.bind('EnterFrame', function () {
+  //               if (A.constTick % 10 === 0) {
+  //                 this.randMod = Crafty.math.randomInt(0, 20);
+  //                 this.addStar();
+  //                 this.addStar();
+  //                 this.addStar();
+  //                 this.trigger('Change');
+  //                 this.draw();
+  //               }
+  //             });
+  //             this.addStar = function () {
+  //               this.attach(
+  //                 Crafty.e('2D, Canvas, Color')
+  //                   .color('rgb(255,255,255)')
+  //                   .attr({x: 315, y: 100, w: 2, h: 2, dx: Math.random()*2-1, dy: Math.random()*2-1})
+  //                   .bind('EnterFrame', function () {
+  //                     if (this.x > 650 ||
+  //                         this.x < 30 ||
+  //                         this.y > 150 ||
+  //                         this.y < 30) {
+  //                       this.destroy();
+  //                     } else {
+  //                       this.x += this.dx;
+  //                       this.y += this.dy;
+  //                       this.dx *= 1.1;
+  //                       this.dy *= 1.1;
+  //                     }
+  //                   }));
+  //               this.trigger('Change');
+  //             };
+  //             for (var i = 0; i < 40; i++) {
+  //               this.addStar();
+  //             }
+  //           }
+  //         })
+  // .getGoing();
+
   // top
   Crafty.e('Wall')
     .attr({x: 10, y: 200, w: 650, h: 50})

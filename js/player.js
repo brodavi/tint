@@ -9,7 +9,7 @@ Crafty.c('Head', {
         w: 22,
         h: 25
       }
-    )
+    );
   }
 });
 
@@ -31,7 +31,8 @@ Crafty.c('Arm', {
       )
       .origin(this.originX, this.originY)
       .bind('WalkingLeft', this.handleWalkingLeft)
-      .bind('WalkingRight', this.handleWalkingRight);
+      .bind('WalkingRight', this.handleWalkingRight)
+      .bind('Standing', this.handleStanding);
     return this;
   },
   set: function (orient) {
@@ -43,6 +44,9 @@ Crafty.c('Arm', {
   },
   handleWalkingRight: function (dir) {
     this.rotation = Math.cos(A.gameTick * 0.3) * this.orient * 45 + 15;
+  },
+  handleStanding: function () {
+    this.rotation = 0;
   }
 });
 
@@ -57,25 +61,29 @@ Crafty.c('Leg', {
           x: this.x - 10,
           y: this.y - 35,
           w: 20,
-          h: 40,
+          h: 50,
           rotation: 0,
           orient: -1 // left
         }
       )
       .origin(this.originX, this.originY)
       .bind('WalkingLeft', this.handleWalkingLeft)
-      .bind('WalkingRight', this.handleWalkingRight);
+      .bind('WalkingRight', this.handleWalkingRight)
+      .bind('Standing', this.handleStanding);
     return this;
   },
   set: function (orient) {
     this.orient = orient;
     return this;
   },
-  handleWalkingLeft: function (dir) {
+  handleWalkingLeft: function () {
     this.rotation = Math.sin(A.gameTick * 0.4) * this.orient * 45 - 15;
   },
-  handleWalkingRight: function (dir) {
+  handleWalkingRight: function () {
     this.rotation = Math.sin(A.gameTick * 0.4) * this.orient * 45 + 15;
+  },
+  handleStanding: function () {
+    this.rotation = 0;
   }
 });
 
@@ -140,9 +148,12 @@ Crafty.c('Player', {
         evt.y - this.y < 0) {
       Crafty.trigger('WalkingRight');
     }
-    if (evt.x - this.x > 0 ||
+    else if (evt.x - this.x > 0 ||
         evt.y - this.y > 0) {
       Crafty.trigger('WalkingLeft');
+    }
+    else {
+      Crafty.trigger('Standing');
     }
   }
 });

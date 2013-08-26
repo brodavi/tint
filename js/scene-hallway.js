@@ -3,8 +3,9 @@ Crafty.scene('sceneHallway', function () {
 
   Crafty.e('Transition');
 
-  Crafty.e('ResponseNotification')
-    .text('Hallway');
+  Crafty.e('Title')
+    .setText('Hallway')
+    .attr({x: 50});
 
   /**
    * Walls

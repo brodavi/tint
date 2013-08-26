@@ -8,6 +8,22 @@ var A = {
   count: 10
 };
 
+Crafty.c('Title', {
+  init: function () {
+    this.requires('2D, Canvas, Text');
+  },
+  setText: function (text) {
+    this.text(text);
+    this.textColor('#ffffff');
+    this.textFont({family: 'mono', size: '30px'});
+    this.h = 30;
+    this.w = text.length*20;
+    this.x = 334 - this.w/2;
+    this.y = 50;
+    return this;
+  }
+});
+
 window.onload = function () {
   // disable scrolling
   document.onkeydown = function () {
@@ -70,5 +86,5 @@ window.onload = function () {
 
   Crafty.e('CameraShake');
 
-  Crafty.scene('sceneSickBay');
+  Crafty.scene('sceneBridge');
 };

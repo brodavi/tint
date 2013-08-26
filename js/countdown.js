@@ -1,13 +1,14 @@
 Crafty.c('Countdown', {
   init: function () {
     this.requires('2D, Canvas, Color')
-      .color('rgb(23,72,34)')
+      .color('rgb(22,22,22)')
       .attr(
         {
           x: 520,
           y: 30,
           w: 50,
           h: 40,
+          z: 100,
           count: A.count,
           textObj: null,
           randShake: 150
@@ -17,17 +18,23 @@ Crafty.c('Countdown', {
       .bind('ResetTime', this.resetTime);
 
     this.textObj = Crafty.e('2D, Canvas, Color, Text')
-      .color('rgb(23,23,23)')
-      .attr({x: this.x + 10, y: this.y + 30})
+      .color('rgb(223,223,223)')
+      .attr({x: this.x + 10, y: this.y + 30, z: this.z + 1})
+      .textColor('#ffffff')
       .textFont(
         {
           family: 'mono',
-          size: '30px'
+          size: '32px'
         }
       )
       .text(A.count);
 
     this.attach(this.textObj);
+    this.border = Crafty.e('2D, Canvas, Color')
+      .color('rgb(100,100,100)')
+      .attr({x: this.x - 5, y: this.y - 5, w: this.w + 10, h: this.h + 10, z: this.z - 1});
+    this.attach(this.border);
+
   },
   resetTime: function () {
 

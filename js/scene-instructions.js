@@ -56,8 +56,10 @@ Crafty.scene('sceneInstructions', function () {
         .text('Loop')
     )
     .bind('KeyDown', function () {
-      Crafty.trigger('ResetTime');
-      Crafty.scene('sceneBridge');
+      if (this.isDown('SPACE')) {
+        Crafty.trigger('ResetTime');
+        Crafty.scene('sceneBridge');
+      }
     })
     .bind('Click', function () {
       Crafty.trigger('ResetTime');

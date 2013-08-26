@@ -7,8 +7,8 @@ Crafty.scene('sceneSickBay', function () {
 
   Crafty.e('Transition');
 
-  Crafty.e('ResponseNotification')
-    .text('Sick Bay');
+  Crafty.e('Title')
+    .setText('Sick Bay');
 
   /**
    * Walls

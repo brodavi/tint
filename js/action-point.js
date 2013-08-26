@@ -1,18 +1,23 @@
 Crafty.c('ResponseNotification', {
   init: function () {
     this.requires('2D, Canvas, Color, Keyboard')
-      .color('rgb(72,94,38)')
+      .color('rgb(172,172,172)')
       .attr(
         {
           x: 120,
-          y: 120,
+          y: 80,
           w: 200,
           h: 50
         }
       );
+    this.attach(Crafty.e('2D, Canvas, Color')
+                .attr({x: 130, y: 90, w: 180, h: 30})
+                .color('rgb(150,150,150)'));
     this.bind('KeyDown', function () {
-      Crafty.trigger('Dismiss');
-      this.destroy();
+      if (this.isDown('SPACE')) {
+        Crafty.trigger('Dismiss');
+        this.destroy();
+      }
     });
   },
   text: function (text) {

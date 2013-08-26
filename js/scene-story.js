@@ -91,8 +91,10 @@ Crafty.scene('sceneStory', function () {
         
     )
     .bind('KeyDown', function () {
-      Crafty.trigger('ResetTime');
-      Crafty.scene('sceneBridge');
+      if (this.isDown('SPACE')) {
+        Crafty.trigger('ResetTime');
+        Crafty.scene('sceneBridge');
+      }
     })
     .bind('Click', function () {
       Crafty.scene('sceneBridge');
