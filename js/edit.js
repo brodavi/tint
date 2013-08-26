@@ -14,7 +14,6 @@ Crafty.c('Editable', {
       })
       .color('rgb(255,0,0)');
     this.attach(this.redbox);
-    console.log('redbox ', this.redbox);
     this.bind('KeyDown', this.handleKeyDown);
     this.unbind('Click', this.handleClick);
   },

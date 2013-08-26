@@ -1,11 +1,11 @@
 Crafty.c('Portal', {
   init: function () {
-    this.requires('2D, Canvas, Color, Collision')
-      .color('rbg(72,85,21)');
+    this.requires('2D, Collision');
   },
   setDestination: function (scene) {
     this.scene = scene;
     this.onHit('Player', this.handleTouched);
+    return this;
   },
   handleTouched: function () {
     Crafty.scene(this.scene);

@@ -49,7 +49,7 @@ Crafty.scene('sceneCargoBay', function () {
   /**
    * Action Points
    */
-  Crafty.e('ActionPoint, Editable')
+  Crafty.e('ActionPoint')
     .attr({x: 542, y: 242, actions:
            [
              {
@@ -65,14 +65,12 @@ Crafty.scene('sceneCargoBay', function () {
     .animate();
 
   // The Door Portals
-  Crafty.e('Portal, Editable')
+  Crafty.e('Portal')
     .attr({x: -2, y: 200, w: 10, h: 100})
-    .color('rgb(24,24,24)')
     .setDestination('sceneCrewQuarters');
 
-  Crafty.e('Portal, Editable')
+  Crafty.e('Portal')
     .attr({x: 284, y: 490, w: 100, h: 20})
-    .color('rgb(24,24,24)')
     .setDestination('sceneEngineRoom');
 
   // The Doors

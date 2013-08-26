@@ -41,8 +41,8 @@ Crafty.scene('sceneSickBay', function () {
   /**
    * Action Points
    */
-  Crafty.e('ActionPoint, Editable')
-    .attr({x: 12, y: 302, actions:
+  Crafty.e('ActionPoint')
+    .attr({x: 312, y: 250, actions:
            [
              {
                actionText: 'Inject Radiation Resistance',
@@ -60,22 +60,86 @@ Crafty.scene('sceneSickBay', function () {
     .setOrigin(580, 270);
 
   // The Door Portal
-  Crafty.e('Portal, Editable')
+  Crafty.e('Portal')
     .attr({x: 657, y: 296, w: 20, h: 100})
-    .color('rgb(24,24,24)')
     .setDestination('sceneHallway');
 
-  // The Teleporter Portal
-  if (A.portalActive) {
-    Crafty.e('Portal')
-      .attr({x: 84, y: 420, w: 40, h: 20})
-      .color('rgb(24,224,224)')
-      .setDestination('sceneEngineRoom');
+  // The Transporter Portal
+  var portal = Crafty.e('Portal')
+        .attr({x: 84, y: 410, w: 40, h: 50, z: 1000})
+        .setDestination('sceneEngineRoom')
+        .attach(
 
-    // The Teleporter Portal Lights TODO: NEEDS TO SPARKLE!!!!
-    Crafty.e('2D, Canvas, Color')
-      .attr({x: 84, y: 320, w: 40, h: 120})
-      .color('rgba(24,24,224,150)');
+          // The Teleporter Portal Lights TODO: NEEDS TO SPARKLE!!!!
+          Crafty.e('2D, Canvas, Particles')
+            .attr({x: 100, y: 340})
+            .particles({
+              angle: 180,
+              gravity: { x: 0, y: 0.4 },
+              maxParticles: 80,
+              size: 1,
+              sizeRandom: 3,
+              speed: 3,
+              speedRandom: 5,
+              lifeSpan: 5,
+              lifeSpanRandom: 10,
+              startColour: [46, 46, 146, 0.5],
+              startColourRandom: [15, 16, 46, 0.3],
+              endColour: [43, 23, 152, 0.7],
+              endColourRandom: [43, 23, 72, 0.6],
+              spread: 10,
+              duration: -1,
+              fastMode: true,
+              jitter: 1
+            })
+        )
+        .attach(
+          Crafty.e('2D, Canvas, Color')
+            .attr({x: 75, y: 320, w: 50, h: 150, z: 1000})
+            .color('rgba(27,27,200,0.2)')
+        )
+        .attach(
+          Crafty.e('2D, Canvas, Color')
+            .attr({x: 65, y: 320, w: 70, h: 20, z: 1000})
+            .color('rgba(27,27,200,0.2)')
+        )
+        .attach(
+          Crafty.e('2D, Canvas, Color')
+            .attr({x: 65, y: 450, w: 70, h: 20, z: 1000})
+            .color('rgba(27,27,200,0.2)')
+        )
+        .attach(
+          Crafty.e('2D, Canvas, Particles')
+            .attr({x: 100, y: 450})
+            .particles({
+              angle: 0,
+              gravity: { x: 0, y: -0.4 },
+              maxParticles: 80,
+              size: 1,
+              sizeRandom: 3,
+              speed: 3,
+              speedRandom: 5,
+              lifeSpan: 5,
+              lifeSpanRandom: 10,
+              startColour: [46, 46, 146, 0.5],
+              startColourRandom: [15, 16, 46, 0.3],
+              endColour: [43, 23, 152, 0.7],
+              endColourRandom: [43, 23, 72, 0.6],
+              spread: 10,
+              duration: -1,
+              fastMode: true,
+              jitter: 1
+            })
+        );
+
+  portal.y = 9999;
+
+  this.bind('PortalActive', function () {
+    portal.y = 420;
+  });
+
+  if (!A.portalActive) {
+    portal.y = 420;
   }
 
   // Player has highest Z

@@ -1,7 +1,7 @@
 Crafty.c('Head', {
   init: function () {
     this.requires('2D, Canvas, Color')
-    .color('rgb(47,27,81)')
+    .color('rgb(81,81,81)')
     .attr(
       {
         x: this.x - 10,
@@ -16,7 +16,7 @@ Crafty.c('Head', {
 Crafty.c('Arm', {
   init: function () {
     this.requires('2D, Canvas, Color, Rotate')
-      .color('rgb(130, 40, 40)')
+      .color('rgb(40,40,40)')
       .attr(
         {
           originX: this.x,
@@ -30,12 +30,6 @@ Crafty.c('Arm', {
         }
       )
       .origin(this.originX, this.originY)
-      .attach(Crafty.e('2D, Canvas, Color')
-             .color('rgb(0,0,255)')
-             .attr({ x: this.originX,
-                     y: this.originY,
-                     w: 2,
-                     h: 2}))
       .bind('WalkingLeft', this.handleWalkingLeft)
       .bind('WalkingRight', this.handleWalkingRight);
     return this;
@@ -55,7 +49,7 @@ Crafty.c('Arm', {
 Crafty.c('Leg', {
   init: function () {
     this.requires('2D, Canvas, Color, Rotate')
-      .color('rgb(100, 30, 30)')
+      .color('rgb(100,100,100)')
       .attr(
         {
           originX: this.x,
@@ -69,12 +63,6 @@ Crafty.c('Leg', {
         }
       )
       .origin(this.originX, this.originY)
-      .attach(Crafty.e('2D, Canvas, Color')
-             .color('rgb(0,0,255)')
-             .attr({ x: this.originX,
-                     y: this.originY,
-                     w: 2,
-                     h: 2}))
       .bind('WalkingLeft', this.handleWalkingLeft)
       .bind('WalkingRight', this.handleWalkingRight);
     return this;
@@ -84,17 +72,17 @@ Crafty.c('Leg', {
     return this;
   },
   handleWalkingLeft: function (dir) {
-    this.rotation = Math.sin(A.gameTick * 0.2) * this.orient * 45 - 15;
+    this.rotation = Math.sin(A.gameTick * 0.4) * this.orient * 45 - 15;
   },
   handleWalkingRight: function (dir) {
-    this.rotation = Math.sin(A.gameTick * 0.2) * this.orient * 45 + 15;
+    this.rotation = Math.sin(A.gameTick * 0.4) * this.orient * 45 + 15;
   }
 });
 
 Crafty.c('PlayerBody', {
   init: function () {
     this.requires('2D, Canvas, Color')
-      .color('rgb(20, 75, 40)')
+      .color('rgb(75,75,75)')
       .attr(
         {
           x: this.x - 15,
@@ -109,14 +97,13 @@ Crafty.c('PlayerBody', {
 // The Player COMPONENT
 Crafty.c('Player', {
   init: function() {
-    this.requires('2D, Canvas, Color, Collision, Multiway')
+    this.requires('2D, Canvas, Collision, Multiway')
       .multiway(5, {
            UP_ARROW: -90,
            DOWN_ARROW: 90,
            LEFT_ARROW: 180,
            RIGHT_ARROW: 0
        })
-      .color('rgb(255, 0, 0)')
       .attr({w: 1, h: 1});
 
     this.attach(Crafty.e('PlayerBody'));

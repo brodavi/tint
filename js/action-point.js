@@ -74,8 +74,10 @@ Crafty.c('ActionItem', {
         this.result();
       }
       if (!this.obj) {
-        Crafty.e('ResponseNotification')
+        if (this.response) {
+          Crafty.e('ResponseNotification')
           .text(this.response);
+        }
         if (this.response2) {
           Crafty.e('ResponseNotification')
             .attr({y: 240})
@@ -161,7 +163,7 @@ Crafty.c('ActionPanel', {
 Crafty.c('FlashingPoint', {
   init: function () {
     this.requires('2D, Canvas, Color, Tween')
-      .attr({w: 20, h: 20, big: false })
+      .attr({w: 20, h: 20, big: false, alpha: 0.5 })
       .bind('TweenEnd', this.animate)
       .color('rgb(34,63,172)');
 
@@ -175,9 +177,9 @@ Crafty.c('FlashingPoint', {
     this.big = Math.abs(this.x - this.bigX) < 2;
 
     if (this.big) {
-      this.tween({x: this.origX, y: this.origY, w: this.origW, h: this.origH}, 32);
+      this.tween({x: this.origX, y: this.origY, w: this.origW, h: this.origH}, 22);
     } else {
-      this.tween({x: this.bigX, y: this.bigY, w: this.bigW, h: this.bigH}, 32);
+      this.tween({x: this.bigX, y: this.bigY, w: this.bigW, h: this.bigH}, 22);
     }
   },
   init2: function () {

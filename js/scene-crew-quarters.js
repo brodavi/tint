@@ -42,7 +42,7 @@ Crafty.scene('sceneCrewQuarters', function () {
   /**
    * Action Points
    */
-  Crafty.e('ActionPoint, Editable')
+  Crafty.e('ActionPoint')
     .attr({x: 342, y: 102, actions:
            [
              {
@@ -56,19 +56,17 @@ Crafty.scene('sceneCrewQuarters', function () {
           });
 
   // The Left Door Portal
-  Crafty.e('Portal, Editable')
+  Crafty.e('Portal')
     .attr({x: -12, y: 296, w: 20, h: 100})
-    .color('rgb(24,24,24)')
-    .setDestination('sceneCrewQuarters');
+    .setDestination('sceneHallway');
 
   // The Left Door
   Crafty.e('DoorLeftRight')
     .setOrigin(-60, 270);
 
   // The Right Door Portal
-  Crafty.e('Portal, Editable')
+  Crafty.e('Portal')
     .attr({x: 657, y: 296, w: 20, h: 100})
-    .color('rgb(24,24,24)')
     .setDestination('sceneCargoBay');
 
   // The Right Door

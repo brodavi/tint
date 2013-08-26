@@ -41,18 +41,25 @@ Crafty.scene('sceneTransporterRoom', function () {
   var actions = [
     {
       actionText: 'Teleport HyperDrive Regulator to Engine Room',
-      response: 'Success!'
+      response: 'Success!',
+      result: function () {
+        A.regulatorInPlaceTick = A.gameTick;
+        A.regulatorInPlace = true;
+        Crafty.trigger('RegulatorInPlace');
+      }
     },
     {
       actionText: 'Set Teleporter Portal',
       response: 'Set Portal from Sick Bay to Engine Room',
       result: function () {
+        A.portalActiveTick = A.gameTick;
         A.portalActive = true;
+        Crafty.trigger('PortalActive');
       }
     },
     {
       actionText: 'Teleport Into Space',
-      response: 'Whoops.',
+      response: 'Well that was dumb.',
       result: function () {
         Crafty.trigger('Dismiss');
         Crafty.trigger('ResetTime');
@@ -75,7 +82,6 @@ Crafty.scene('sceneTransporterRoom', function () {
   // The Portal
   Crafty.e('Portal')
     .attr({x: 284, y: 0, w: 100, h: 20})
-    .color('rgb(24,24,24)')
     .setDestination('sceneHallway');
 
   Crafty.e('Player')

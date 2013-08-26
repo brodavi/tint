@@ -52,22 +52,18 @@ Crafty.scene('sceneHallway', function () {
   //The Door Portals
   Crafty.e('Portal')
     .attr({x: 284, y: 5, w: 100, h: 20})
-    .color('rgb(24,24,24)')
     .setDestination('sceneBridge');
 
   Crafty.e('Portal')
     .attr({x: 284, y: 490, w: 100, h: 20})
-    .color('rgb(24,24,24)')
     .setDestination('sceneTransporterRoom');
 
   Crafty.e('Portal')
     .attr({x: -10, y: 200, w: 20, h: 100})
-    .color('rgb(24,24,24)')
     .setDestination('sceneSickBay');
 
   Crafty.e('Portal')
     .attr({x: 660, y: 200, w: 20, h: 100})
-    .color('rgb(24,24,24)')
     .setDestination('sceneCrewQuarters');
 
 

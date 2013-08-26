@@ -9,7 +9,8 @@ Crafty.c('Countdown', {
           w: 50,
           h: 40,
           count: A.count,
-          textObj: null
+          textObj: null,
+          randShake: 150
         }
       )
       .bind('GameTick', this.handleGameTick)
@@ -29,17 +30,43 @@ Crafty.c('Countdown', {
     this.attach(this.textObj);
   },
   resetTime: function () {
-    Crafty.trigger('BigShake');
-    Crafty.scene('sceneBridge');
+
+    if (!A.diedOnce) {
+      Crafty.scene('sceneInstructions');
+    } else {
+      Crafty.trigger('BigShake');
+      Crafty.scene('sceneBridge');
+    }
+
     A.count = 10;
+    A.gameTick = 0;
     this.trigger('Change'); // hax for text
 
     // Reset "player reality"
     A.protected = false;
     A.portalActive = false;
+    A.regulatorInPlace = false;
     // But A.foundManifest must stay true if true throughout lives
   },
   handleGameTick: function () {
+    //console.log('gameTick: ' + A.gameTick + ' portalActiveTick: ' + A.portalActiveTick);
+
+    if (A.gameTick === A.portalActiveTick) {
+      A.portalActive = true;
+      Crafty.trigger('PortalActive');
+      A.portalActiveTick = 9999999999;
+    }
+
+    if (A.gameTick === A.regulatorInPlaceTick) {
+      A.regulatorInPlace = true;
+      Crafty.trigger('RegulatorInPlace');
+      A.regulatorInPlaceTick = 9999999999;
+    }
+
+    if (A.gameTick % this.randShake === 0) {
+      this.randShake = Math.random()*100 + 50;
+      Crafty.trigger('SmallShake');
+    }
     if (A.gameTick % 65 === 0) {
       A.count -= 1;
       this.textObj.text('' + A.count);

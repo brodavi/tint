@@ -41,12 +41,25 @@ Crafty.scene('sceneEngineRoom', function () {
   var actions = [
     {
       actionText: 'Connect Regulator to Engine',
-      response: 'Success!',
       result: function () {
-        Crafty.scene('Win');
+        Crafty.scene('sceneWin');
+      }
+    },
+    {
+      actionText: 'Attempt to fix Engine',
+      response: 'You need a HyperDrive Regulator!',
+      result: function () {
+        Crafty.trigger('ResetTime');
       }
     }
   ];
+
+  if (!A.regulatorInPlace) {
+    actions.splice(0,1);
+  } else {
+    actions.splice(1,1);
+    console.log(actions);
+  }
 
   Crafty.e('ActionPoint')
     .attr({x: 300, y: 450, actions: actions})
@@ -88,10 +101,65 @@ Crafty.scene('sceneEngineRoom', function () {
   Crafty.e('DoorUpDown')
     .setOrigin(256, -40);
 
+  // The Engine
+  Crafty.e('2D, Canvas, Color')
+    .color('rgb(90,90,90)')
+    .attr({x: 150, y: 300, w: 100, h: 150});
+  Crafty.e('2D, Canvas, Color')
+    .color('rgb(40,40,40)')
+    .attr({x: 170, y: 320, w: 60, h: 110});
+  Crafty.e('2D, Canvas, Text')
+    .attr({x: 160, y: 290})
+    .textFont({family: 'mono', size: '20px'})
+    .textColor('#000000', 1)
+    .text('Engine')
+    .trigger('Change');
+
+  // The Regulator
+  var regulator = Crafty.e('2D, Canvas')
+        .attach(
+          Crafty.e('2D, Canvas, Color')
+            .color('rgb(90,90,90)')
+            .attr({x: 350, y: 380, w: 100, h: 50})
+        )
+        .attach(
+          Crafty.e('2D, Canvas, Color')
+            .color('rgb(40,40,40)')
+            .attr({x: 370, y: 400, w: 60, h: 10})
+          )
+        .attach(
+          Crafty.e('2D, Canvas, Color')
+            .color('rgb(40,40,40)')
+            .attr({y: 390, x: 360, w: 10, h: 30})
+        )
+        .attach(
+          Crafty.e('2D, Canvas, Color')
+            .color('rgb(40,40,40)')
+            .attr({y: 390, x: 410, w: 10, h: 30})
+        )
+        .attach(
+          Crafty.e('2D, Canvas, Text')
+            .attr({x: 350, y: 370})
+            .textFont({family: 'mono', size: '20px'})
+            .textColor('#000000', 1)
+            .text('Regulator')
+        );
+
+  regulator.y = 9999;
+
+  this.bind('RegulatorInPlace', function () {
+    regulator.y = 0;
+    regulator.trigger('Change');
+  });
+
+  if (A.regulatorInPlace) {
+    regulator.y = 0;
+    regulator.trigger('Change');
+  }
+
   // The Portal
   Crafty.e('Portal')
     .attr({x: 284, y: 0, w: 100, h: 20})
-    .color('rgb(24,24,24)')
     .setDestination('sceneCargoBay');
 
   Crafty.e('Player')
