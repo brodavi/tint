@@ -1,6 +1,6 @@
 Crafty.c('Portal', {
   init: function () {
-    this.requires('2D, Collision');
+    this.requires('2D, Canvas, Collision, Editable');
   },
   setDestination: function (scene) {
     this.scene = scene;

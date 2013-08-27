@@ -7,9 +7,6 @@ Crafty.scene('sceneBridge', function () {
 
   Crafty.e('Transition');
 
-  Crafty.e('ResponseNotification')
-    .text('Bridge');
-
   /**
    * Walls
    */
@@ -70,28 +67,39 @@ Crafty.scene('sceneBridge', function () {
 
   // top
   Crafty.e('Wall')
-    .attr({x: 10, y: 200, w: 650, h: 50})
+    .attr({x: 0, y: 200, w: 700, h: 50})
     .color('rgb(46,46,46)');
 
   // left
   Crafty.e('Wall')
-    .attr({x: 4, y: 230, w: 7, h: 256})
+    .attr({x: 0, y: 230, w: 20, h: 356})
     .color('rgb(46,46,46)');
 
   // right
   Crafty.e('Wall')
-    .attr({x: 658, y: 230, w: 7, h: 256})
+    .attr({x: 630, y: 230, w: 100, h: 356})
     .color('rgb(46,46,46)');
 
   // bottom left
   Crafty.e('Wall')
-    .attr({x: 9, y: 482, w: 272, h: 7})
+    .attr({x: 9, y: 482, w: 222, h: 20})
     .color('rgb(46,46,46)');
 
   // bottom right
   Crafty.e('Wall')
-    .attr({x: 386, y: 482, w: 272, h: 7})
+    .attr({x: 386 + 48, y: 482, w: 230, h: 20})
     .color('rgb(46,46,46)');
+
+
+  var leftPanel = Crafty.e('Panel')
+    .attr({x: 72, y: 232})
+    .set();
+  leftPanel.rotation = 45;
+
+  var rightPanel = Crafty.e('Panel')
+        .attr({x: 572, y: 252})
+        .set();
+  rightPanel.rotation = -45;
 
   /**
    * Action Points
@@ -110,11 +118,6 @@ Crafty.scene('sceneBridge', function () {
           {
             actionText: 'Eject Warp Core',
             response: 'Warp core ejection system offline'
-          },
-          {
-            actionText: 'Show Map',
-            response: '',
-            obj: 'Map'
           }
         ]
       })
@@ -122,17 +125,28 @@ Crafty.scene('sceneBridge', function () {
 
   // The Door
   Crafty.e('DoorUpDown')
-    .setOrigin(256, 402);
+    .setOrigin(256, 422);
 
   // The Portal
   Crafty.e('Portal')
-    .attr({x: 284, y: 490, w: 100, h: 20})
+    .attr({x: 234, y: 494, w: 200, h: 20})
     .setDestination('sceneHallway');
 
-  Crafty.e('Player')
-    .attr({x: 220, y: 320, z: 1000});
+  if (A.comingFrom === 'sceneHallway') {
+    Crafty.e('Player')
+      .attr({x: 310, y: 470});
+  } else {
+    Crafty.e('Player')
+      .attr({x: 150, y: 320});
+  }
 
   // Gotta have the countdown on each scene?
   Crafty.e('Countdown');
+
+  A.comingFrom = 'sceneBridge';
+
+  Crafty.e('Title')
+    .setText('Bridge')
+    .attr({x: 50});
 
 });

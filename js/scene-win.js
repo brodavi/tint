@@ -55,4 +55,11 @@ Crafty.scene('sceneWin', function () {
     .textFont({family: 'mono', size: '20px'})
     .textColor('#eeeeee', 1)
     .text('Take your time.');
+
+  Crafty.e('2D, Canvas, Text')
+    .attr({x: 470, y: 450})
+    .textFont({family: 'italic', size: '12px'})
+    .textColor('#ee83ee', 1)
+    .text('You Won!');
+
 });

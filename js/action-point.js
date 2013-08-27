@@ -45,6 +45,7 @@ Crafty.c('ResponseNotification', {
 Crafty.c('ActionItem', {
   init: function () {
     this.requires('2D, Canvas, Color, Keyboard, Text')
+      .textFont({family: 'mono', size: '15px'})
       .attr(
         {
           actionText: null,
@@ -98,7 +99,7 @@ Crafty.c('ActionItem', {
 Crafty.c('ActionPanel', {
   init: function () {
     this.requires('2D, Canvas, Color, Keyboard, Tween')
-      .color('rgb(158,120,150)')
+      .color('rgb(150,150,150)')
       .attr(
         {
           x: 100,
@@ -109,6 +110,10 @@ Crafty.c('ActionPanel', {
           actionItems: []
         }
       );
+
+    this.attach(Crafty.e('2D, Canvas, Color')
+                .color('rgb(90,90,90)')
+                .attr({x: this.x+5, y: this.y+5, w: this.w -10, h: this.h-10}));
 
     this.bind('SelectionMade', this.destroy);
     this.bind('KeyDown', this.handleKeyDown);
@@ -145,7 +150,7 @@ Crafty.c('ActionPanel', {
           .attr(
             {
               x: this.x + 20,
-              y: this.y + 20 + i * 20,
+              y: this.y + 20 + i * 30,
               actionText: actions[i].actionText,
               response: actions[i].response,
               response2: actions[i].response2,
@@ -157,10 +162,16 @@ Crafty.c('ActionPanel', {
       // set the text
       actionItem.text(actions[i].actionText);
 
+      actionItem.width = actions[i].actionText * 20;
+
       this.actionItems.push(actionItem);
+
       this.attach(actionItem);
     }
 
+    this.actionItems[0].activate();
+
+    this.trigger('Change');
     return this;
   }
 });
@@ -175,20 +186,18 @@ Crafty.c('FlashingPoint', {
     return this;
   },
   animate: function () {
-    if (!this.origX) {
-      this.init2();
-    }
-
     this.big = Math.abs(this.x - this.bigX) < 2;
 
     if (this.big) {
-      this.tween({x: this.origX, y: this.origY, w: this.origW, h: this.origH}, 22);
+      this.tween({x: this._parent.x, y: this._parent.y, w: this.origW, h: this.origH}, 22);
     } else {
       this.tween({x: this.bigX, y: this.bigY, w: this.bigW, h: this.bigH}, 22);
     }
+    return this;
   },
   init2: function () {
-    this.attr({origX: this.x, origY: this.y, origW: this.w, origH: this.h, bigX: this.x - 10, bigY: this.y - 10, bigW: this.w + 30, bigH: this.h + 30});
+    this.attr({origW: this.w, origH: this.h, bigX: this.x - 10, bigY: this.y - 10, bigW: this.w + 30, bigH: this.h + 30});
+    return this;
   }
 
 });
@@ -202,9 +211,13 @@ Crafty.c('ActionPoint', {
     return this;
   },
   animate: function () {
-    Crafty.e('FlashingPoint')
-      .attr({x: this.x, y: this.y})
-      .animate();
+    this.attach(
+      Crafty.e('FlashingPoint')
+        .attr({x: this.x, y: this.y})
+        .init2()
+        .animate()
+    );
+    return this;
   },
   showActions: function () {
     Crafty.e('ActionPanel').setActions(this.actions);

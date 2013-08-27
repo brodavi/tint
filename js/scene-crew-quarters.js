@@ -3,47 +3,24 @@ Crafty.scene('sceneCrewQuarters', function () {
 
   Crafty.e('Transition');
 
-  Crafty.e('ResponseNotification')
-    .text('Crew Quarters');
-
   /**
    * Walls
    */
   // top
   Crafty.e('Wall')
-    .attr({x: 10, y: 200, w: 650, h: 50})
-    .color('rgb(46,46,46)');
-
-  // left top
-  Crafty.e('Wall')
-    .attr({x: 4, y: 230, w: 7, h: 80})
-    .color('rgb(46,46,46)');
-
-  // left bottom
-  Crafty.e('Wall')
-    .attr({x: 4, y: 380, w: 7, h: 110})
-    .color('rgb(46,46,46)');
-
-  // right top
-  Crafty.e('Wall')
-    .attr({x: 658, y: 230, w: 7, h: 80})
-    .color('rgb(46,46,46)');
-
-  // right bottom
-  Crafty.e('Wall')
-    .attr({x: 658, y: 380, w: 7, h: 110})
+    .attr({x: 0, y: 100, w: 750, h: 150})
     .color('rgb(46,46,46)');
 
   // bottom
   Crafty.e('Wall')
-    .attr({x: 6, y: 482, w: 660, h: 7})
+    .attr({x: 0, y: 447, w: 680, h: 57})
     .color('rgb(46,46,46)');
 
   /**
    * Action Points
    */
   Crafty.e('ActionPoint')
-    .attr({x: 342, y: 102, actions:
+    .attr({x: 342, y: 402, actions:
            [
              {
                actionText: 'Sleep',
@@ -53,11 +30,12 @@ Crafty.scene('sceneCrewQuarters', function () {
                }
              }
            ]
-          });
+          })
+    .animate();
 
   // The Left Door Portal
   Crafty.e('Portal')
-    .attr({x: -12, y: 296, w: 20, h: 100})
+    .attr({x: -15, y: 251, w: 20, h: 194})
     .setDestination('sceneHallway');
 
   // The Left Door
@@ -66,7 +44,7 @@ Crafty.scene('sceneCrewQuarters', function () {
 
   // The Right Door Portal
   Crafty.e('Portal')
-    .attr({x: 657, y: 296, w: 20, h: 100})
+    .attr({x: 661, y: 251, w: 20, h: 194})
     .setDestination('sceneCargoBay');
 
   // The Right Door
@@ -74,10 +52,20 @@ Crafty.scene('sceneCrewQuarters', function () {
     .setOrigin(580, 270);
 
   // Player has highest Z
-  Crafty.e('Player')
-    .attr({x: 500, y: 320});
+  if (A.comingFrom === 'sceneHallway'){
+    Crafty.e('Player')
+      .attr({x: 50, y: 350});  
+  } else {
+    Crafty.e('Player')
+      .attr({x: 630, y: 350});
+  }
 
   // Gotta have the countdown on each scene?
   Crafty.e('Countdown');
+
+  Crafty.e('Title')
+    .setText('Crew Quarters');
+
+  A.comingFrom = 'sceneCrewQuarters';
 
 });

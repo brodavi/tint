@@ -19,7 +19,7 @@ Crafty.c('Title', {
     this.h = 30;
     this.w = text.length*20;
     this.x = 334 - this.w/2;
-    this.y = 50;
+    this.y = 40;
     return this;
   }
 });
@@ -35,7 +35,6 @@ window.onload = function () {
   Crafty.e('TickManager, Keyboard')
     .attr(
       {
-        slowMo: false,
         slowMod: 5,
         paused: false
       }
@@ -58,10 +57,10 @@ window.onload = function () {
       }
     })
     .bind('ActionPoint', function () {
-      this.slowMo = true;
+      A.slowMo = true;
     })
     .bind('Dismiss', function () {
-      this.slowMo = false;
+      A.slowMo = false;
     })
     .bind('EnterFrame', function () {
 
@@ -70,7 +69,8 @@ window.onload = function () {
         return;
       }
 
-      if (this.slowMo) {
+      if (A.slowMo) {
+        console.log('slomo')
         if (A.constTick % this.slowMod === 0) {
           A.gameTick = A.gameTick + 1;
           Crafty.trigger('GameTick');
@@ -86,5 +86,5 @@ window.onload = function () {
 
   Crafty.e('CameraShake');
 
-  Crafty.scene('sceneBridge');
+  Crafty.scene('sceneSplashScreen');
 };

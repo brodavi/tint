@@ -3,54 +3,36 @@ Crafty.scene('sceneCargoBay', function () {
 
   Crafty.e('Transition');
 
-  Crafty.e('ResponseNotification')
-    .text('Cargo Bay');
-
   /**
    * Walls
    */
   // top
   Crafty.e('Wall')
-    .attr({x: 10, y: 20, w: 650, h: 50})
-    .color('rgb(46,46,46)');
-
-  // left top
-  Crafty.e('Wall')
-    .attr({x: 4, y: 20, w: 7, h: 180})
+    .attr({x: 0, y: 0, w: 680, h: 150})
     .color('rgb(46,46,46)');
 
   // left bottom
   Crafty.e('Wall')
-    .attr({x: 4, y: 300, w: 7, h: 190})
-    .color('rgb(46,46,46)');
-
-  // left top
-  Crafty.e('Wall')
-    .attr({x: 4, y: 20, w: 7, h: 180})
-    .color('rgb(46,46,46)');
-
-  // left bottom
-  Crafty.e('Wall')
-    .attr({x: 4, y: 300, w: 7, h: 190})
+    .attr({x: 0, y: 349, w: 27, h: 200})
     .color('rgb(46,46,46)');
 
   // right
   Crafty.e('Wall')
-    .attr({x: 658, y: 20, w: 7, h: 466});
+    .attr({x: 638, y: 20, w: 37, h: 457});
 
   // bottom left
   Crafty.e('Wall')
-    .attr({x: 9, y: 482, w: 272, h: 7});
+    .attr({x: 0, y: 472, w: 229, h: 28});
 
   // bottom right
   Crafty.e('Wall')
-    .attr({x: 386, y: 482, w: 272, h: 7});
+    .attr({x: 434, y: 474, w: 232, h: 27});
 
   /**
    * Action Points
    */
-  Crafty.e('ActionPoint')
-    .attr({x: 542, y: 242, actions:
+  var ap = Crafty.e('ActionPoint')
+    .attr({actions:
            [
              {
                actionText: 'Examine Equipment',
@@ -61,16 +43,58 @@ Crafty.scene('sceneCargoBay', function () {
                }
              }
            ]
-          })
-    .animate();
+          });
+
+  // The Regulator
+  var regulator = Crafty.e('2D, Canvas')
+        .attr({x: 470, y: 280});
+
+  regulator
+    .attach(
+      Crafty.e('2D, Canvas, Color')
+        .color('rgb(30,30,30)')
+        .attr({x: regulator.x-2, y: regulator.y-2, w: 104, h: 54})
+    )
+    .attach(
+      Crafty.e('2D, Canvas, Color')
+        .color('rgb(90,90,90)')
+        .attr({x: regulator.x, y: regulator.y, w: 100, h: 50})
+    )
+    .attach(
+      Crafty.e('2D, Canvas, Color')
+        .color('rgb(40,40,40)')
+        .attr({x: regulator.x + 25, y: regulator.y + 20, w: 60, h: 10})
+    )
+    .attach(
+      Crafty.e('2D, Canvas, Color')
+        .color('rgb(40,40,40)')
+        .attr({y: regulator.y + 5, x: regulator.x + 50, w: 10, h: 30})
+    )
+    .attach(
+      Crafty.e('2D, Canvas, Color')
+        .color('rgb(40,40,40)')
+        .attr({y: regulator.y + 15, x: regulator.x + 30, w: 10, h: 30})
+    )
+    .attach(ap.attr({x: regulator.x + 30, y: regulator.y + 10}).animate());
+
+  if (A.regulatorInPlace) {
+    regulator.y = 9999;
+  } else {
+    regulator.y = 280;
+  }
+
+  this.bind('RegulatorInPlace', function () {
+    regulator.y = 9999;
+    regulator.trigger('Change');
+  });
 
   // The Door Portals
-  Crafty.e('Portal')
-    .attr({x: -2, y: 200, w: 10, h: 100})
+  Crafty.e('Portal, Editable')
+    .attr({x: -11, y: 137, w: 14, h: 242})
     .setDestination('sceneCrewQuarters');
 
-  Crafty.e('Portal')
-    .attr({x: 284, y: 490, w: 100, h: 20})
+  Crafty.e('Portal, Editable')
+    .attr({x: 231, y: 493, w: 204, h: 24})
     .setDestination('sceneEngineRoom');
 
   // The Doors
@@ -79,11 +103,21 @@ Crafty.scene('sceneCargoBay', function () {
   Crafty.e('DoorLeftRight')
     .setOrigin(-69, 172);
 
-  // Player has highest Z
-  Crafty.e('Player')
-    .attr({x: 220, y: 320});
+  if (A.comingFrom === 'sceneCrewQuarters') {
+    Crafty.e('Player')
+      .attr({x: 50, y: 250});
+  } else if (A.comingFrom === 'sceneEngineRoom') {
+    Crafty.e('Player')
+      .attr({x: 220, y: 420});
+  }
 
   // Gotta have the countdown on each scene?
   Crafty.e('Countdown');
+
+  Crafty.e('Title')
+    .setText('Cargo Bay');
+
+
+  A.comingFrom = 'sceneCargoBay';
 
 });

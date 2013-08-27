@@ -106,7 +106,7 @@ Crafty.c('PlayerBody', {
 Crafty.c('Player', {
   init: function() {
     this.requires('2D, Canvas, Collision, Multiway')
-      .multiway(5, {
+      .multiway(3, {
            UP_ARROW: -90,
            DOWN_ARROW: 90,
            LEFT_ARROW: 180,

@@ -3,37 +3,28 @@ Crafty.scene('sceneEngineRoom', function () {
 
   Crafty.e('Transition');
 
-  Crafty.e('Title')
-    .setText('Engine Room')
-    .attr({x: 50});
-
   /**
    * Walls
    */
 
   // top left
   Crafty.e('Wall')
-    .attr({x: 9, y: 20, w: 272, h: 7})
-    .color('rgb(46,46,46)');
-
-  // top right
-  Crafty.e('Wall')
-    .attr({x: 386, y: 20, w: 272, h: 7})
+    .attr({x: 0, y: 0, w: 272, h: 97})
     .color('rgb(46,46,46)');
 
   // left
   Crafty.e('Wall')
-    .attr({x: 4, y: 20, w: 7, h: 556})
+    .attr({x: 0, y: 0, w: 127, h: 506})
     .color('rgb(46,46,46)');
 
   // right
   Crafty.e('Wall')
-    .attr({x: 658, y: 20, w: 7, h: 556})
+    .attr({x: 485, y: 0, w: 187, h: 506})
     .color('rgb(46,46,46)');
 
   // bottom
   Crafty.e('Wall')
-    .attr({x: 6, y: 482, w: 660, h: 7})
+    .attr({x: 48, y: 459, w: 460, h: 47})
     .color('rgb(46,46,46)');
 
   /**
@@ -60,7 +51,7 @@ Crafty.scene('sceneEngineRoom', function () {
   }
 
   Crafty.e('ActionPoint')
-    .attr({x: 300, y: 450, actions: actions})
+    .attr({x: 250, y: 350, actions: actions})
     .animate();
 
   // The Radiation
@@ -86,9 +77,9 @@ Crafty.scene('sceneEngineRoom', function () {
 
   // The Radiation Trigger
   Crafty.e('2D, Canvas, Collision')
-    .attr({x: 0, y: 300, w: 700, h: 400})
+    .attr({x: 0, y: 250, w: 700, h: 400})
     .onHit('Player', function () {
-      if (!A.protected) {
+      if (!A.resistsRadiation) {
         Crafty.trigger('ResetTime');
         Crafty.e('ResponseNotification')
           .text('The radiation killed you instantly');
@@ -97,7 +88,7 @@ Crafty.scene('sceneEngineRoom', function () {
 
   // The Door
   Crafty.e('DoorUpDown')
-    .setOrigin(256, -40);
+    .setOrigin(300, -40);
 
   // The Engine
   Crafty.e('2D, Canvas, Color')
@@ -115,55 +106,62 @@ Crafty.scene('sceneEngineRoom', function () {
 
   // The Regulator
   var regulator = Crafty.e('2D, Canvas')
-        .attach(
-          Crafty.e('2D, Canvas, Color')
-            .color('rgb(90,90,90)')
-            .attr({x: 350, y: 380, w: 100, h: 50})
-        )
-        .attach(
-          Crafty.e('2D, Canvas, Color')
-            .color('rgb(40,40,40)')
-            .attr({x: 370, y: 400, w: 60, h: 10})
-          )
-        .attach(
-          Crafty.e('2D, Canvas, Color')
-            .color('rgb(40,40,40)')
-            .attr({y: 390, x: 360, w: 10, h: 30})
-        )
-        .attach(
-          Crafty.e('2D, Canvas, Color')
-            .color('rgb(40,40,40)')
-            .attr({y: 390, x: 410, w: 10, h: 30})
-        )
-        .attach(
-          Crafty.e('2D, Canvas, Text')
-            .attr({x: 350, y: 370})
-            .textFont({family: 'mono', size: '20px'})
-            .textColor('#000000', 1)
-            .text('Regulator')
-        );
+        .attr({x: 300, y: 380});
+
+  regulator
+    .attach(
+      Crafty.e('2D, Canvas, Color')
+        .color('rgb(30,30,30)')
+        .attr({x: regulator.x-2, y: regulator.y-2, w: 104, h: 54})
+    )
+    .attach(
+      Crafty.e('2D, Canvas, Color')
+        .color('rgb(90,90,90)')
+        .attr({x: regulator.x, y: regulator.y, w: 100, h: 50})
+    )
+    .attach(
+      Crafty.e('2D, Canvas, Color')
+        .color('rgb(40,40,40)')
+        .attr({x: regulator.x + 25, y: regulator.y + 20, w: 60, h: 10})
+    )
+    .attach(
+      Crafty.e('2D, Canvas, Color')
+        .color('rgb(40,40,40)')
+        .attr({y: regulator.y + 5, x: regulator.x + 50, w: 10, h: 30})
+    )
+    .attach(
+      Crafty.e('2D, Canvas, Color')
+        .color('rgb(40,40,40)')
+        .attr({y: regulator.y + 15, x: regulator.x + 30, w: 10, h: 30})
+    );
 
   regulator.y = 9999;
 
   this.bind('RegulatorInPlace', function () {
-    regulator.y = 0;
+    regulator.y = 380;
     regulator.trigger('Change');
   });
 
   if (A.regulatorInPlace) {
-    regulator.y = 0;
+    regulator.y = 380;
     regulator.trigger('Change');
   }
 
   // The Portal
   Crafty.e('Portal')
-    .attr({x: 284, y: 0, w: 100, h: 20})
+    .attr({x: 274, y: 0, w: 232, h: 15})
     .setDestination('sceneCargoBay');
 
   Crafty.e('Player')
-    .attr({x: 320, y: 120, z: 1000});
+    .attr({x: 320, y: 50, z: 1000});
 
   // Gotta have the countdown on each scene?
   Crafty.e('Countdown');
+
+  Crafty.e('Title')
+    .setText('Engine Room')
+    .attr({x: 50});
+
+  A.comingFrom = 'sceneEngineRoom';
 
 });

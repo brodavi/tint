@@ -45,12 +45,13 @@ Crafty.c('Countdown', {
       Crafty.scene('sceneBridge');
     }
 
+    A.slowMo = false;
     A.count = 10;
     A.gameTick = 0;
     this.trigger('Change'); // hax for text
 
     // Reset "player reality"
-    A.protected = false;
+    A.resistsRadiation = false;
     A.portalActive = false;
     A.regulatorInPlace = false;
     // But A.foundManifest must stay true if true throughout lives
